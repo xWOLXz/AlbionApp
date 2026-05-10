@@ -3,72 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1." />
-  <title>Albion Market PWA</title>
-  <meta name="theme-color" content="#f172a" />
+  <title>Albion Market</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="header">
-    <h1>Albion Market</h1>
-    <p>Compra barato, vende caro</p>
-  </header>
-
   <main class="container">
-    <section class="card">
-      <h2>Configuración</h2>
+    <h1>Albion Market</h1>
+    <p>Busca un item por ID y compara precios entre ciudades.</p>
 
-      <label for="searchInput">Buscar item por nombre o ID</label>
-      <input type="text" id="searchInput" placeholder="Ej: Bolsa T4 o T4_BAG" />
+    <input id="itemInput" type="text" placeholder="Ej: T4_BAG" />
+    <button id="searchBtn">Buscar</button>
 
-      <label for="buyCityFilter">Ciudad de compra</label>
-      <select id="buyCityFilter">
-        <option value="">Cualquiera</option>
-      </select>
-
-      <label for="sellCityFilter">Ciudad de venta</label>
-      <select id="sellCityFilter">
-        <option value="">Cualquiera</option>
-      </select>
-
-      <label for="minProfitInput">Ganancia mínima neta</label>
-      <input type="number" id="minProfitInput" value="100" min="" />
-
-      <label for="taxInput">Impuesto de venta (%)</label>
-      <input type="number" id="taxInput" value="6.5" step=".1" min="" />
-
-      <label for="batchSizeInput">Tamaño del lote</label>
-      <input type="number" id="batchSizeInput" value="30" min="5" max="100" />
-
-      <div class="actions">
-        <button id="loadItemsBtn">Recargar items</button>
-        <button id="scanAllBtn">Escanear todos</button>
-        <button id="scanFilteredBtn">Escanear filtrados</button>
-      </div>
-
-      <p class="small">
-        Recomendado en Android: lotes de 20 a 40 items.
-      </p>
-    </section>
-
-    <section class="card">
-      <h2>Estado</h2>
-      <div id="status">Iniciando...</div>
-      <div class="progress-bar">
-        <div id="progressFill"></div>
-      </div>
-    </section>
-
-    <section class="card">
-      <h2>Items cargados</h2>
-      <div id="itemsCount"> items</div>
-      <div id="itemsPreview" class="items-preview"></div>
-    </section>
-
-    <section class="card">
-      <h2>Oportunidades</h2>
-      <div id="results"></div>
-    </section>
+    <div id="status"></div>
+    <div id="results"></div>
   </main>
 
   <script src="app.js"></script>
