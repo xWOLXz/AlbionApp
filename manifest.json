@@ -1,0 +1,9 @@
+{
+  "name": "Albion Market",
+  "short_name": "Albion",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f172a",
+  "theme_color": "#f172a",
+  "icons": []
+}
