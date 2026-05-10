@@ -1,89 +1,48 @@
-const cities = [
-  "Bridgewatch",
-  "Martlock",
-  "Thetford",
-  "Fort Sterling",
-  "Lymhurst",
-  "Caerleon",
-  "Black Market"
-];
+console.log("app.js cargó");
 
-const itemInput = document.getElementById("itemInput");
-const searchBtn = document.getElementById("searchBtn");
 const statusEl = document.getElementById("status");
 const resultsEl = document.getElementById("results");
+const searchBtn = document.getElementById("searchBtn");
+const itemInput = document.getElementById("itemInput");
 
-searchBtn.addEventListener("click", searchItem);
+if (statusEl) statusEl.innerHTML = "JavaScript cargado";
 
-async function searchItem() {
+searchBtn.addEventListener("click", async () => {
   const item = itemInput.value.trim().toUpperCase();
 
+  statusEl.innerHTML = "Botón funcionando...";
+
   if (!item) {
-    statusEl.textContent = "Escribe un ID de item.";
+    statusEl.innerHTML = "Escribe un item.";
     return;
   }
 
-  statusEl.textContent = "Buscando...";
-  resultsEl.innerHTML = "";
-
-  const locations = cities.join(",");
-  const url = `https://west.albion-online-data.com/api/v2/stats/prices/${item}?locations=${encodeURIComponent(locations)}`;
-
   try {
+    const url = `https://west.albion-online-data.com/api/v2/stats/prices/${item}?locations=Bridgewatch,Martlock,Thetford,Fort%20Sterling,Lymhurst,Caerleon,Black%20Market`;
+
+    statusEl.innerHTML = "Consultando API...";
     const res = await fetch(url);
     const data = await res.json();
 
     if (!Array.isArray(data) || data.length === ) {
-      statusEl.textContent = "No se encontraron datos.";
+      statusEl.innerHTML = "No se encontraron datos.";
+      resultsEl.innerHTML = "";
       return;
     }
 
-    const valid = data.filter(x => x.sell_price_min > );
+    statusEl.innerHTML = `Datos recibidos: ${data.length}`;
 
-    if (valid.length === ) {
-      statusEl.textContent = "No hay precios válidos.";
-      return;
-    }
-
-    const barato = valid.reduce((a, b) =>
-      a.sell_price_min < b.sell_price_min ? a : b
-    );
-
-    const caro = valid.reduce((a, b) =>
-      a.sell_price_min > b.sell_price_min ? a : b
-    );
-
-    const ganancia = caro.sell_price_min - barato.sell_price_min;
-
-    statusEl.innerHTML = `Resultado para <b>${item}</b>`;
-
-    let html = `
-      <div class="card">
-        <div><b>Comprar en:</b> ${barato.city} - ${barato.sell_price_min.toLocaleString()}</div>
-        <div><b>Vender en:</b> ${caro.city} - ${caro.sell_price_min.toLocaleString()}</div>
-        <div><b>Ganancia bruta:</b> ${ganancia.toLocaleString()}</div>
+    resultsEl.innerHTML = data.map(row => `
+      <div style="background:#18202a;padding:12px;border-radius:12px;margin:10px ;">
+        <div><b>${row.city}</b></div>
+        <div>Sell Min: ${row.sell_price_min || "N/A"}</div>
+        <div>Buy Max: ${row.buy_price_max || "N/A"}</div>
+        <div style="font-size:12px;color:#aaa;">${row.sell_price_min_date || "Sin fecha"}</div>
       </div>
-    `;
+    `).join("");
 
-    valid.sort((a, b) => a.sell_price_min - b.sell_price_min);
-
-    valid.forEach(row => {
-      html += `
-        <div class="card">
-          <div><b>${row.city}</b></div>
-          <div>Sell Min: ${row.sell_price_min?.toLocaleString() || "N/A"}</div>
-          <div>Buy Max: ${row.buy_price_max?.toLocaleString() || "N/A"}</div>
-        </div>
-      `;
-    });
-
-    resultsEl.innerHTML = html;
-  } catch (error) {
-    console.error(error);
-    statusEl.textContent = "Error consultando la API.";
+  } catch (err) {
+    console.error(err);
+    statusEl.innerHTML = "Error consultando la API.";
   }
-}
-
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("./service-worker.js");
-}
+});
