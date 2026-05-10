@@ -1,15 +1,14 @@
-const CACHE_NAME = "albion-market-v1";
-const urlsToCache = [
-  "./",
-  "./index.html",
-  "./style.css",
-  "./app.js",
-  "./manifest.json"
-];
-
 self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
+    caches.open("albion-pwa-v1").then(cache => {
+      return cache.addAll([
+        "./",
+        "./index.html",
+        "./style.css",
+        "./app.js",
+        "./manifest.json"
+      ]);
+    })
   );
 });
 
