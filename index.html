@@ -4,20 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1." />
   <title>Albion Market</title>
-  <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="container">
+  <div class="container">
     <h1>Albion Market</h1>
-    <p>Busca un item por ID y compara precios entre ciudades.</p>
+    <p>Compara precios entre ciudades.</p>
 
-    <input id="itemInput" type="text" placeholder="Ej: T4_BAG" />
-    <button id="searchBtn">Buscar</button>
+    <div class="search-box">
+      <input type="text" id="itemInput" placeholder="Ej: T4_BAG" />
+      <button id="searchBtn">Buscar</button>
+    </div>
 
-    <div id="status"></div>
+    <div id="status">Esperando...</div>
     <div id="results"></div>
-  </main>
+  </div>
 
   <script src="app.js"></script>
 </body>
